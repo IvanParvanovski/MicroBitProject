@@ -1,7 +1,8 @@
 import pandas as pd
-import os
 from datetime import datetime
-import matplotlib.pyplot as plt
+from matplotlib import pyplot as plt 
+import numpy as np 
+from matplotlib.animation import FuncAnimation
 
 databaseAQ = pd.DataFrame()
 
@@ -48,10 +49,18 @@ def show_DB():
 
 def graphDB():
     pointAmount = 100
-    plt.plot(databaseAQ["DateTime"].tail(pointAmount),databaseAQ["Air Quality"].tail(pointAmount))
+    x= databaseAQ["DateTime"].tail(pointAmount)
+    y= databaseAQ["Air Quality"].tail(pointAmount)
+    fig, ax = plt.subplots()  
+    #ax.plot(x, y, marker='o', label="Data Points")
+    line, = ax.plot(x, y, lw = 1, marker="o", markersize=3)  
     plt.ylim(bottom = 0)
     plt.show()
 
+def graphInit():
+    pass
+def graphUpdate():
+    line
 def saveDB():
     pass;
 
