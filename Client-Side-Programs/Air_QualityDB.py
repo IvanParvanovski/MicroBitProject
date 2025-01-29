@@ -3,8 +3,8 @@ from datetime import datetime
 from matplotlib import pyplot as plt 
 import numpy as np 
 from matplotlib.animation import FuncAnimation
+import matplotlib.dates as mdates
 
-databaseAQ = pd.DataFrame()
 
 def main():
     global databaseAQ
@@ -13,7 +13,6 @@ def main():
     pd.set_option('display.max_columns', 100) 
     for i in range(2):
         add_dataValue()
-    graphDB()
     show_DB()
 
 
@@ -24,7 +23,7 @@ def initDB():
         time,AQuality = get_dataValue()
         dataStructure = {"Air Quality" : [AQuality],
                          "TimeStamp"   : [time],
-                         "DateTime" : [str(datetime.now())]}
+                         "DateTime" : [datetime.now()]}
         return pd.DataFrame(dataStructure)
 
 def readDB():
@@ -35,9 +34,11 @@ def get_dataValue():
 
 def add_dataValue():
     time,AQuality = get_dataValue()
+    dt = datetime.now()
     databaseAQ.loc[len(databaseAQ)] = { "Air Quality" : AQuality,
                                         "TimeStamp"   : time,
-                                        "DateTime" : str(datetime.now())}
+                                        "DateTime" : dt}
+
 def show_DB():
     print(databaseAQ.head(25))
     print(databaseAQ.tail(25))
@@ -47,20 +48,6 @@ def show_DB():
     print(databaseAQ["Air Quality"].describe())
 
 
-def graphDB():
-    pointAmount = 100
-    x= databaseAQ["DateTime"].tail(pointAmount)
-    y= databaseAQ["Air Quality"].tail(pointAmount)
-    fig, ax = plt.subplots()  
-    #ax.plot(x, y, marker='o', label="Data Points")
-    line, = ax.plot(x, y, lw = 1, marker="o", markersize=3)  
-    plt.ylim(bottom = 0)
-    plt.show()
-
-def graphInit():
-    pass
-def graphUpdate():
-    line
 def saveDB():
     pass;
 
