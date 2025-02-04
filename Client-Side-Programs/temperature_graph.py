@@ -1,42 +1,41 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[7]:
+# In[3]:
 
 
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
 
 
-# In[17]:
+# In[37]:
 
 
-# Sample data
-time_of_day = ['00:00', '06:00', '07:00', '12:00', '18:00', '24:00'] 
-temperatures = [15, 20, 22, 25, 22, 18]
+columns_to_read = ['Time', 'Temperature']
+df = pd.read_csv('cleaned_data.csv', usecols=columns_to_read)
 
-# Convert time strings to a format that can be plotted
-# Here we use numpy to create a range of values for the x-axis
-x = np.arange(len(time_of_day))
+x = df['Time'] 
 
 
-# In[19]:
+# In[31]:
 
 
-print(x)
+print(list(df['Time']))
+print(list(df['Temperature']))
 
 
-# In[ ]:
+# In[41]:
 
 
 # Create a plot
 plt.figure(figsize=(10, 5))
-plt.plot(x, temperatures, marker='o')
+plt.plot(x, df['Temperature'], marker='o')
 
 # Adding title and labels
 plt.title('Temperature Throughout the Day')
-plt.xticks(x, time_of_day)  # Set x-ticks to be the time of day
-plt.xlabel('Time of Day')
+plt.xticks(x, list(df['Time']))  # Set x-ticks to be the time of day
+plt.xlabel('Time')
 plt.ylabel('Temperature (°C)')
 
 # Show the plot
