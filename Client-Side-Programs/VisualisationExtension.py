@@ -44,7 +44,7 @@ def show_DB():
     print(df.info())
     for header in list(df.columns):
         print(df[header].describe())
-#graph 'Humidity', 'Pressure', 'IQAScore'
+
 def humidityVisualisation():
     xyParameter = (df["Time"].values,df["Humidity"].values)
     plt.xlabel("Time (s)")
