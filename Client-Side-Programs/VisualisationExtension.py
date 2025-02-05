@@ -2,25 +2,6 @@ import pandas as pd
 from datetime import datetime
 from matplotlib import pyplot as plt 
 
-tempIdealMin = 18
-tempIdeal = 20
-tempIdealMax = 30
-
-humidityIdealMin = 50
-humidityIdeal = 60
-humidityIdealMax = 70
-
-pressureIdealMin = 1000
-pressureIdeal = 1010
-pressureIdealMax = 1020
-
-iaqScoreIdealMin = 0
-iaqScoreIdeal = 0
-iaqScoreIdealMax = 50
-
-eC02IdealMin = 400
-eC02Ideal = 700
-eC02IdealMax = 1000
 
 def main():
     global df
@@ -28,6 +9,7 @@ def main():
     ideals = get_ideals()
     df = initDB()
     show_DB()
+
     humidityVisualisation()
     pressureVisualisation()
     iaqScoreVisualisation()
@@ -48,23 +30,23 @@ def show_DB():
         print(df[header].describe())
 
 def humidityVisualisation():
-    xyParameter = (df["Time"].values,df["Humidity"].values)
+    xyParameter = (df["Time"],df["Humidity"])
     plt.xlabel("Time (s)")
     plt.ylabel("Humidity (%RH)")
     plt.title("Humidity Over Time")
     plt.plot(*xyParameter)
-    plt.axhline(humidityIdealMin, color="red", linestyle = "--")
-    plt.axhline(humidityIdeal, color="green", linestyle = "--")
-    plt.axhline(humidityIdealMax, color="red", linestyle = "--")
+    plt.axhline(int(ideals[0][1]), color="red", linestyle = "--")
+    plt.axhline(int(ideals[1][1]), color="green", linestyle = "--")
+    plt.axhline(int(ideals[2][1]), color="red", linestyle = "--")
     plt.show()
 
     plt.xlabel("Time (s)")
     plt.ylabel("Humidity (%RH)")
     plt.title("Humidity Over Time")
     plt.scatter(*xyParameter)
-    plt.axhline(humidityIdealMin, color="red", linestyle = "--")
-    plt.axhline(humidityIdeal, color="green", linestyle = "--")
-    plt.axhline(humidityIdealMax, color="red", linestyle = "--")
+    plt.axhline(ideals[0][1], color="red", linestyle = "--")
+    plt.axhline(ideals[1][1], color="green", linestyle = "--")
+    plt.axhline(ideals[2][1], color="red", linestyle = "--")
     plt.show()
 
     plt.ylabel("Humidity (%RH)")
@@ -78,18 +60,18 @@ def pressureVisualisation():
     plt.ylabel("Pressure (hPa)")
     plt.title("Pressure Over Time")
     plt.plot(*xyParameter)
-    plt.axhline(pressureIdealMin, color="red", linestyle = "--")
-    plt.axhline(pressureIdeal, color="green", linestyle = "--")
-    plt.axhline(pressureIdealMax, color="red", linestyle = "--")
+    plt.axhline(ideals[0][2], color="red", linestyle = "--")
+    plt.axhline(ideals[1][2], color="green", linestyle = "--")
+    plt.axhline(ideals[2][2], color="red", linestyle = "--")
     plt.show()
 
     plt.xlabel("Time (s)")
     plt.ylabel("Pressure (hPa)")
     plt.title("Pressure Over Time")
     plt.scatter(*xyParameter)
-    plt.axhline(pressureIdealMin, color="red", linestyle = "--")
-    plt.axhline(pressureIdeal, color="green", linestyle = "--")
-    plt.axhline(pressureIdealMax, color="red", linestyle = "--")
+    plt.axhline(ideals[0][2], color="red", linestyle = "--")
+    plt.axhline(ideals[1][2], color="green", linestyle = "--")
+    plt.axhline(ideals[2][2], color="red", linestyle = "--")
     plt.show()
 
     plt.ylabel("Pressure (hPa)")
@@ -103,18 +85,18 @@ def iaqScoreVisualisation():
     plt.ylabel("IQAScore")
     plt.title("IQAScore Over Time")
     plt.plot(*xyParameter)
-    plt.axhline(iaqScoreIdealMin, color="red", linestyle = "--")
-    plt.axhline(iaqScoreIdeal, color="green", linestyle = "--")
-    plt.axhline(iaqScoreIdealMax, color="red", linestyle = "--")
+    plt.axhline(ideals[0][3], color="red", linestyle = "--")
+    plt.axhline(ideals[1][3], color="green", linestyle = "--")
+    plt.axhline(ideals[2][3], color="red", linestyle = "--")
     plt.show()
 
     plt.xlabel("Time (s)")
     plt.ylabel("IQAScore")
     plt.title("IQAScore Over Time")
     plt.scatter(*xyParameter)
-    plt.axhline(iaqScoreIdealMin, color="red", linestyle = "--")
-    plt.axhline(iaqScoreIdeal, color="green", linestyle = "--")
-    plt.axhline(iaqScoreIdealMax, color="red", linestyle = "--")
+    plt.axhline(ideals[0][3], color="red", linestyle = "--")
+    plt.axhline(ideals[1][3], color="green", linestyle = "--")
+    plt.axhline(ideals[2][3], color="red", linestyle = "--")
     plt.show()
 
     plt.xlabel("Time (s)")
@@ -125,14 +107,22 @@ def iaqScoreVisualisation():
 
 def temperatureVisualisation():
     xyParameter = (df["Time"].values,df["Temperature"].values)
+    plt.xlabel("Time (s)")
+    plt.ylabel("Temperature (Celsius)")
+    plt.title("Temperature Over Time")
+    plt.scatter(*xyParameter)
+    plt.axhline(ideals[0][0], color="red", linestyle = "--")
+    plt.axhline(ideals[1][0], color="green", linestyle = "--")
+    plt.axhline(ideals[2][0], color="red", linestyle = "--")
+    plt.show()
 
     plt.xlabel("Time (s)")
     plt.ylabel("Temperature (Celsius)")
     plt.title("Temperature Over Time")
     plt.scatter(*xyParameter)
-    plt.axhline(tempIdealMin, color="red", linestyle = "--")
-    plt.axhline(tempIdeal, color="green", linestyle = "--")
-    plt.axhline(tempIdealMax, color="red", linestyle = "--")
+    plt.axhline(ideals[0][0], color="red", linestyle = "--")
+    plt.axhline(ideals[1][0], color="green", linestyle = "--")
+    plt.axhline(ideals[2][0], color="red", linestyle = "--")
     plt.show()
 
     plt.ylabel("Temperature (Celsius)")
@@ -142,14 +132,22 @@ def temperatureVisualisation():
 
 def eC02Visualisation():
     xyParameter = (df["Time"].values,df["eCO2Value"].values)
+    plt.xlabel("Time (s)")
+    plt.ylabel("eCO2Value (ppm)")
+    plt.title("eCO2Value Over Time")
+    plt.plot(*xyParameter)
+    plt.axhline(ideals[0][4], color="red", linestyle = "--")
+    plt.axhline(ideals[1][4], color="green", linestyle = "--")
+    plt.axhline(ideals[2][4], color="red", linestyle = "--")
+    plt.show()
 
     plt.xlabel("Time (s)")
     plt.ylabel("eCO2Value (ppm)")
     plt.title("eCO2Value Over Time")
     plt.scatter(*xyParameter)
-    plt.axhline(eC02IdealMin, color="red", linestyle = "--")
-    plt.axhline(eC02Ideal, color="green", linestyle = "--")
-    plt.axhline(eC02IdealMax, color="red", linestyle = "--")
+    plt.axhline(ideals[0][4], color="red", linestyle = "--")
+    plt.axhline(ideals[1][4], color="green", linestyle = "--")
+    plt.axhline(ideals[2][4], color="red", linestyle = "--")
     plt.show()
 
     plt.ylabel("eCO2Value (ppm)")
@@ -159,14 +157,19 @@ def eC02Visualisation():
 
 def get_ideals():
     idealMins = []
-    ideals = []
+    idealsG = []
     idealMaxs = [] 
 
     with open("customIdeal.csv", "r") as file:
         file.readline()
         idealMins = file.readline()[4:].strip().split(',')
-        ideals = file.readline()[6:].strip().split(',')
-        idealMaxs = file.readline()[5:].strip().split(',')
+        idealsG = file.readline()[6:].strip().split(',')
+        idealMaxs = file.readline()[4:].strip().split(',')
     
-    return [idealMins,ideals,idealMaxs]
+    for i in range(0,5):
+        idealMins[i] = int(idealMins[i])
+        idealsG[i] = int(idealsG[i])
+        idealMaxs[i] = int(idealMaxs[i])
+
+    return [idealMins,idealsG,idealMaxs]
 main()
