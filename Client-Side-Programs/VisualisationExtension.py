@@ -24,6 +24,8 @@ eC02IdealMax = 1000
 
 def main():
     global df
+    global ideals
+    ideals = get_ideals()
     df = initDB()
     show_DB()
     humidityVisualisation()
@@ -155,4 +157,16 @@ def eC02Visualisation():
     plt.boxplot(xyParameter[1])
     plt.show()
 
+def get_ideals():
+    idealMins = []
+    ideals = []
+    idealMaxs = [] 
+
+    with open("customIdeal.csv", "r") as file:
+        file.readline()
+        idealMins = file.readline()[4:].strip().split(',')
+        ideals = file.readline()[6:].strip().split(',')
+        idealMaxs = file.readline()[5:].strip().split(',')
+    
+    return [idealMins,ideals,idealMaxs]
 main()
